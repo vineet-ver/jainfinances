@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
+
+import { shimmerBlurDataUrl } from "@/lib/blur";
 
 export function OwnerSection() {
   return (
@@ -13,8 +16,17 @@ export function OwnerSection() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="flex items-center gap-5 md:block"
         >
-          <div className="grid h-24 w-24 place-items-center rounded-2xl border border-[--brand-border] bg-[var(--brand-gradient)] text-3xl font-semibold text-black md:h-36 md:w-36 md:text-5xl">
-            SJ
+          <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-[--brand-border] md:h-36 md:w-36">
+            <Image
+              src="/jain.png"
+              alt="Surendra Jain"
+              fill
+              sizes="(max-width: 768px) 96px, 144px"
+              className="object-cover"
+              placeholder="blur"
+              blurDataURL={shimmerBlurDataUrl(144, 144)}
+              priority
+            />
           </div>
           <div className="md:mt-5">
             <p className="text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Owner</p>
