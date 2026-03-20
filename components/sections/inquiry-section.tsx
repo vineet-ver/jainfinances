@@ -27,6 +27,7 @@ export function InquirySection() {
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const [stepError, setStepError] = useState("");
   const [form, setForm] = useState<FormState>(initialState);
 
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
@@ -37,6 +38,30 @@ export function InquirySection() {
       ...prev,
       [field]: value,
     }));
+
+  const handleStepOneContinue = () => {
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const phone = form.phone.trim();
+
+    if (!name || !email || !phone) {
+      setStepError("Please fill Name, Email, and Phone to continue.");
+      return;
+    }
+
+    setStepError("");
+    setStep(2);
+  };
+
+  const handleStepTwoContinue = () => {
+    if (!form.service.trim()) {
+      setStepError("Please select a service to continue.");
+      return;
+    }
+
+    setStepError("");
+    setStep(3);
+  };
 
   const launchConfetti = () => {
     const colors = ["#D4AF37", "#F2D492", "#B8860B", "#FFF2CC"];
@@ -93,7 +118,7 @@ export function InquirySection() {
   };
 
   return (
-    <section id="inquiry" className="mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="inquiry" className="relative z-[55] mx-auto max-w-6xl px-6 py-24 md:px-10">
       <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Premium Inquiry Hub</p>
       <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Begin Your Private Consultation</h2>
 
@@ -107,7 +132,8 @@ export function InquirySection() {
             <FloatingInput label="Full Name" value={form.name} onChange={(val) => update("name", val)} />
             <FloatingInput label="Email" value={form.email} onChange={(val) => update("email", val)} type="email" />
             <FloatingInput label="Phone" value={form.phone} onChange={(val) => update("phone", val)} />
-            <Button onClick={() => setStep(2)} disabled={!form.name || !form.email || !form.phone}>
+            {stepError ? <p className="text-sm text-rose-400">{stepError}</p> : null}
+            <Button onClick={handleStepOneContinue}>
               Continue
             </Button>
           </div>
@@ -132,13 +158,20 @@ export function InquirySection() {
               ))}
             </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button variant="ghost" onClick={() => setStep(1)}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setStepError("");
+                  setStep(1);
+                }}
+              >
                 Back
               </Button>
-              <Button onClick={() => setStep(3)} disabled={!form.service}>
+              <Button onClick={handleStepTwoContinue}>
                 Continue
               </Button>
             </div>
+            {stepError ? <p className="mt-3 text-sm text-rose-400">{stepError}</p> : null}
           </div>
         )}
 
@@ -154,7 +187,13 @@ export function InquirySection() {
             />
             {error ? <p className="mt-3 text-sm text-rose-400">{error}</p> : null}
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <Button variant="ghost" onClick={() => setStep(2)}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setStepError("");
+                  setStep(2);
+                }}
+              >
                 Back
               </Button>
               <Button onClick={submit} disabled={sending || !form.message}>
