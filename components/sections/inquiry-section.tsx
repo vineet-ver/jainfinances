@@ -103,15 +103,13 @@ export function InquirySection() {
 
       <div className="mt-8 rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-8">
         {step === 1 && (
-          <div className="grid gap-5 md:grid-cols-2">
+          <div className="space-y-5">
             <FloatingInput label="Full Name" value={form.name} onChange={(val) => update("name", val)} />
             <FloatingInput label="Email" value={form.email} onChange={(val) => update("email", val)} type="email" />
             <FloatingInput label="Phone" value={form.phone} onChange={(val) => update("phone", val)} />
-            <div className="flex items-end">
-              <Button className="w-full" onClick={() => setStep(2)} disabled={!form.name || !form.email || !form.phone}>
-                Continue
-              </Button>
-            </div>
+            <Button onClick={() => setStep(2)} disabled={!form.name || !form.email || !form.phone}>
+              Continue
+            </Button>
           </div>
         )}
 
@@ -123,7 +121,7 @@ export function InquirySection() {
                 <button
                   key={option}
                   onClick={() => update("service", option)}
-                  className={`rounded-2xl border p-5 text-left transition ${
+                  className={`rounded-2xl border p-5 text-left transition active:scale-95 ${
                     form.service === option
                       ? "border-[--brand-solid] bg-[--surface-2]"
                       : "border-[--brand-border] hover:border-[--brand-solid]"
@@ -133,7 +131,7 @@ export function InquirySection() {
                 </button>
               ))}
             </div>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button variant="ghost" onClick={() => setStep(1)}>
                 Back
               </Button>
@@ -155,7 +153,7 @@ export function InquirySection() {
               className="ink-input w-full rounded-2xl border border-[--brand-border] bg-[--surface-2] p-4 text-sm text-[--text-primary] outline-none"
             />
             {error ? <p className="mt-3 text-sm text-rose-400">{error}</p> : null}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button variant="ghost" onClick={() => setStep(2)}>
                 Back
               </Button>
@@ -202,7 +200,7 @@ function FloatingInput({
   return (
     <label className="group relative block">
       <span
-        className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-[--text-secondary] transition-all ${
+        className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-[--text-secondary] transition-all duration-200 ${
           value ? "top-3 translate-y-0 text-[10px] uppercase tracking-[0.15em]" : ""
         }`}
       >
@@ -212,7 +210,7 @@ function FloatingInput({
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-14 w-full rounded-2xl border border-[--brand-border] bg-[--surface-2] px-4 pt-4 text-[--text-primary] outline-none transition focus:border-[--brand-solid]"
+        className="h-14 w-full rounded-2xl border border-[--brand-border] bg-[--surface-2] px-4 pt-4 text-[--text-primary] outline-none transition focus:border-[--brand-solid] focus:shadow-[0_0_0_3px_rgba(212,175,55,0.1)] placeholder:text-[--text-secondary]/50"
       />
     </label>
   );

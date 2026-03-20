@@ -33,6 +33,12 @@ body {
   background: var(--bg-radial);
   color: var(--text-primary);
   min-height: 100vh;
+  cursor: none;
+}
+
+button {
+  position: relative;
+  z-index: 1;
 }
 
 .font-display {
@@ -119,6 +125,19 @@ body {
 
 .ink-input:focus {
   box-shadow: 0 0 0 1px var(--brand-solid), 0 0 30px color-mix(in oklab, var(--brand-solid) 30%, transparent);
+}
+
+/* Ghost button dark mode fix */
+.dark button {
+  color: var(--text-primary);
+}
+
+/* Improve mobile button touch targets */
+@media (max-width: 640px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 .animate-float {

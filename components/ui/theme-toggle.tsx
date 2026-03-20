@@ -13,7 +13,7 @@ export function ThemeToggle() {
     <button
       aria-label="Toggle theme"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative flex h-9 w-[74px] items-center rounded-full border border-[--brand-border] bg-black/20 px-1"
+      className="relative flex h-9 w-[74px] items-center rounded-full border border-[--brand-border] bg-[--surface-2] px-1 shadow-sm transition-colors hover:bg-[--surface-1]"
       data-cursor="active"
     >
       <motion.div
@@ -24,8 +24,8 @@ export function ThemeToggle() {
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       />
       <span className="relative z-10 flex w-full items-center justify-between px-1.5 text-xs text-[--text-primary]">
-        <Moon className="h-3.5 w-3.5" />
-        <Sun className="h-3.5 w-3.5" />
+        <Moon className="h-4 w-4" />
+        <Sun className="h-4 w-4" />
       </span>
     </button>
   );

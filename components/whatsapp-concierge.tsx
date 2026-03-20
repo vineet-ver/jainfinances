@@ -10,7 +10,7 @@ export function WhatsAppConcierge() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-5 right-5 z-[60]">
+    <div className="fixed bottom-5 right-5 z-50">
       <div
         className={cn(
           "mb-3 w-[300px] origin-bottom-right rounded-2xl border border-[--brand-border] bg-[--surface-1] p-4 shadow-2xl transition-all duration-300",
@@ -19,7 +19,7 @@ export function WhatsAppConcierge() {
       >
         <div className="mb-3 flex items-center justify-between">
           <p className="text-sm font-semibold text-[--text-primary]">Concierge Online</p>
-          <button onClick={() => setOpen(false)} className="text-[--text-secondary]" aria-label="Close concierge">
+          <button onClick={() => setOpen(false)} className="text-[--text-secondary] transition hover:text-[--text-primary]" aria-label="Close concierge">
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -34,7 +34,7 @@ export function WhatsAppConcierge() {
           href={CONTACT.whatsapp}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex w-full items-center justify-center rounded-xl bg-[var(--brand-gradient)] px-4 py-2.5 text-sm font-semibold text-black"
+          className="inline-flex w-full items-center justify-center rounded-xl bg-[var(--brand-gradient)] px-4 py-2.5 text-sm font-semibold text-black transition active:scale-95"
           data-cursor="active"
         >
           Start WhatsApp Chat
@@ -43,7 +43,7 @@ export function WhatsAppConcierge() {
 
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="concierge-breathe inline-flex h-14 w-14 items-center justify-center rounded-full border border-[--brand-border] bg-[var(--brand-gradient)] text-black shadow-[0_12px_35px_rgba(212,175,55,0.4)]"
+        className="concierge-breathe inline-flex h-14 w-14 items-center justify-center rounded-full border border-[--brand-border] bg-[var(--brand-gradient)] text-black shadow-[0_12px_35px_rgba(212,175,55,0.4)] transition active:scale-95"
         aria-label="Open WhatsApp concierge"
         data-cursor="active"
       >
