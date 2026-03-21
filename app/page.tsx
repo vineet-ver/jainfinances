@@ -1,7 +1,11 @@
 import { Navbar } from "@/components/navbar";
+import { FundingEligibilitySection } from "@/components/sections/funding-eligibility-section";
+import { FundingFaqSection } from "@/components/sections/funding-faq-section";
+import { FundingRiskSection } from "@/components/sections/funding-risk-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { InquirySection } from "@/components/sections/inquiry-section";
 import { OwnerSection } from "@/components/sections/owner-section";
+import { PrivateFundingSection } from "@/components/sections/private-funding-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { ShowcaseSection } from "@/components/sections/showcase-section";
 import { TrustSection } from "@/components/sections/trust-section";
@@ -15,6 +19,10 @@ export default function Home() {
       <main>
         <HeroSection />
         <ServicesSection />
+        <PrivateFundingSection />
+        <FundingEligibilitySection />
+        <FundingRiskSection />
+        <FundingFaqSection />
         <ShowcaseSection />
         <TrustSection />
         <OwnerSection />

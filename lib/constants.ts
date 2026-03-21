@@ -8,6 +8,10 @@ export const CONTACT = {
 export const NAV_LINKS = [
   { href: "#home", label: "Home" },
   { href: "#services", label: "Services" },
+  { href: "#private-funding", label: "Private Funding" },
+  { href: "#funding-eligibility", label: "Eligibility" },
+  { href: "#funding-risk", label: "Risk" },
+  { href: "#funding-faq", label: "FAQ" },
   { href: "#showcase", label: "Showcase" },
   { href: "#trust", label: "Trust" },
   { href: "#owner", label: "Owner" },
