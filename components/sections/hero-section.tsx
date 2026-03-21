@@ -73,7 +73,7 @@ export function HeroSection() {
         </p>
 
         <h1 className="max-w-4xl font-display text-5xl leading-[1.06] text-[--text-primary] md:text-7xl">
-          <GlitchText text={headline} variant="glitch" delay={0.08} />
+          {isMobile ? headline : <GlitchText text={headline} variant="glitch" delay={0.08} />}
         </h1>
 
         <motion.p
