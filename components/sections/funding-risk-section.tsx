@@ -1,3 +1,5 @@
+import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+
 const riskLayers = [
   {
     title: "Profile Assessment",
@@ -28,6 +30,7 @@ const transparencyPoints = [
 export function FundingRiskSection() {
   return (
     <section id="funding-risk" className="mx-auto max-w-7xl px-6 py-24 md:px-10">
+      <SectionStickyLabel label="Risk" />
       <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Risk Framework</p>
       <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Governance, Controls, And Clarity</h2>
 

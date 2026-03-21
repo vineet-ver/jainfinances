@@ -34,6 +34,20 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   cursor: none;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(212, 175, 55, 0.16), transparent 42%),
+    radial-gradient(circle at 80% 90%, rgba(0, 31, 63, 0.14), transparent 40%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.1)' stroke-width='1'%3E%3Cpath d='M0 60h120M60 0v120'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 button {
@@ -106,6 +120,25 @@ button {
   transition: opacity 250ms ease;
 }
 
+.premium-card {
+  transition: transform 380ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 380ms ease;
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.2);
+}
+
+.image-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.22) 50%, transparent 80%);
+  transform: translateX(-140%);
+  animation: imageSweep 6.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
 .spotlight-card:hover::before {
   opacity: 1;
 }
@@ -125,6 +158,42 @@ button {
 
 .ink-input:focus {
   box-shadow: 0 0 0 1px var(--brand-solid), 0 0 30px color-mix(in oklab, var(--brand-solid) 30%, transparent);
+}
+
+.section-sticky-label {
+  position: sticky;
+  top: 0.9rem;
+  z-index: 28;
+  width: fit-content;
+  margin-bottom: 1rem;
+  border: 1px solid var(--brand-border);
+  background: color-mix(in oklab, var(--surface-1) 86%, transparent);
+  backdrop-filter: blur(14px);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.section-sticky-label span {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-secondary);
+}
+
+.section-sticky-label:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--brand-solid) 26%, var(--brand-border));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+.motion-surface {
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 420ms ease;
+}
+
+.motion-surface:hover {
+  transform: translateY(-3px);
 }
 
 /* Ghost button dark mode fix */
@@ -190,6 +259,32 @@ button {
   100% {
     transform: scale(1.12);
   }
+}
+
+@keyframes imageSweep {
+  0%,
+  74% {
+    transform: translateX(-140%);
+  }
+  100% {
+    transform: translateX(140%);
+  }
+}
+
+@keyframes ripple {
+  from {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(18);
+  }
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {

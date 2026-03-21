@@ -1,8 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+import { useToast } from "@/components/ui/toast";
 import { CONTACT, SERVICE_OPTIONS } from "@/lib/constants";
 import confetti from "canvas-confetti";
+import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -23,11 +26,13 @@ const initialState: FormState = {
 };
 
 export function InquirySection() {
+  const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [stepError, setStepError] = useState("");
+  const [shakeKey, setShakeKey] = useState(0);
   const [form, setForm] = useState<FormState>(initialState);
 
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
@@ -46,6 +51,8 @@ export function InquirySection() {
 
     if (!name || !email || !phone) {
       setStepError("Please fill Name, Email, and Phone to continue.");
+      setShakeKey((k) => k + 1);
+      toast("Please complete required fields", { variant: "warning" });
       return;
     }
 
@@ -56,6 +63,8 @@ export function InquirySection() {
   const handleStepTwoContinue = () => {
     if (!form.service.trim()) {
       setStepError("Please select a service to continue.");
+      setShakeKey((k) => k + 1);
+      toast("Please select a service", { variant: "warning" });
       return;
     }
 
@@ -76,6 +85,7 @@ export function InquirySection() {
   const submit = async () => {
     if (!accessKey) {
       setError("Missing Web3Forms key. Add NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.");
+      toast("Missing form configuration key", { variant: "error" });
       return;
     }
 
@@ -103,32 +113,44 @@ export function InquirySection() {
       const data = (await response.json()) as { success?: boolean; message?: string };
       if (!response.ok || !data.success) {
         setError(data.message ?? "Unable to submit inquiry right now.");
+        toast(data.message ?? "Unable to submit inquiry right now", { variant: "error" });
         return;
       }
 
       setSuccess(true);
+      toast("Inquiry submitted successfully", { variant: "success" });
       launchConfetti();
       setForm(initialState);
       setStep(1);
     } catch {
       setError("Network issue while submitting. Please try again.");
+      toast("Network issue while submitting", { variant: "error" });
     } finally {
       setSending(false);
     }
   };
 
   return (
-    <section id="inquiry" className="relative z-[55] mx-auto max-w-6xl px-6 py-24 md:px-10">
+    <section id="inquiry" className="relative z-55 mx-auto max-w-6xl px-6 py-24 md:px-10">
+      <SectionStickyLabel label="Inquiry" />
       <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Premium Inquiry Hub</p>
       <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Begin Your Private Consultation</h2>
 
       <div className="mt-8 overflow-hidden rounded-full border border-[--brand-border] bg-[--surface-2]">
-        <div className="h-1.5 bg-[var(--brand-gradient)] transition-all duration-500" style={{ width: progress }} />
+        <div className="h-1.5 bg-(--brand-gradient) transition-all duration-500" style={{ width: progress }} />
       </div>
 
       <div className="mt-8 rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-8">
-        {step === 1 && (
-          <div className="space-y-5">
+        <AnimatePresence mode="wait">
+          {step === 1 && (
+          <motion.div
+            key={`step-${step}-${shakeKey}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0, x: [0, -6, 6, -4, 4, 0] }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="space-y-5"
+          >
             <FloatingInput label="Full Name" value={form.name} onChange={(val) => update("name", val)} />
             <FloatingInput label="Email" value={form.email} onChange={(val) => update("email", val)} type="email" />
             <FloatingInput label="Phone" value={form.phone} onChange={(val) => update("phone", val)} />
@@ -136,11 +158,17 @@ export function InquirySection() {
             <Button onClick={handleStepOneContinue}>
               Continue
             </Button>
-          </div>
+          </motion.div>
         )}
 
         {step === 2 && (
-          <div>
+          <motion.div
+            key={`step-${step}-${shakeKey}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0, x: [0, -6, 6, -4, 4, 0] }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
             <p className="mb-4 text-sm uppercase tracking-[0.14em] text-[--text-secondary]">Select Service</p>
             <div className="grid gap-4 md:grid-cols-2">
               {SERVICE_OPTIONS.map((option) => (
@@ -172,11 +200,17 @@ export function InquirySection() {
               </Button>
             </div>
             {stepError ? <p className="mt-3 text-sm text-rose-400">{stepError}</p> : null}
-          </div>
+          </motion.div>
         )}
 
         {step === 3 && (
-          <div>
+          <motion.div
+            key={`step-${step}-${shakeKey}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
             <p className="mb-3 text-sm uppercase tracking-[0.14em] text-[--text-secondary]">Message</p>
             <textarea
               value={form.message}
@@ -203,12 +237,13 @@ export function InquirySection() {
             <p className="mt-5 text-xs text-[--text-secondary]">
               You can also reach us directly at {CONTACT.phone} or {CONTACT.email}.
             </p>
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </div>
 
       {success ? (
-        <div className="fixed inset-0 z-[70] grid place-items-center bg-[--surface-1]/95 p-6 backdrop-blur-xl">
+        <div className="fixed inset-0 z-70 grid place-items-center bg-[--surface-1]/95 p-6 backdrop-blur-xl">
           <div className="max-w-lg rounded-3xl border border-[--brand-border] bg-[--surface-2] p-8 text-center">
             <CheckCircle2 className="mx-auto mb-5 h-14 w-14 text-[--brand-solid]" />
             <h3 className="font-display text-4xl text-[--text-primary]">Application Received</h3>

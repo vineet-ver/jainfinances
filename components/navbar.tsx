@@ -10,20 +10,28 @@ import { useEffect, useState } from "react";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setScrolled(currentY > 24);
+      setHidden(currentY > lastY && currentY > 120 && !open);
+      lastY = currentY;
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 py-4 md:px-8">
+    <header className={cn("fixed inset-x-0 top-0 z-50 px-4 py-4 transition-transform duration-500 md:px-8", hidden ? "-translate-y-24" : "translate-y-0")}>
       <nav
         className={cn(
           "mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[--brand-border] px-4 py-3 transition-all md:px-6",
-          scrolled ? "bg-[--surface-1]/70 backdrop-blur-xl" : "bg-transparent",
+          scrolled ? "bg-[--surface-1]/70 py-2 shadow-[0_14px_38px_rgba(0,0,0,0.16)] backdrop-blur-xl" : "bg-transparent",
         )}
       >
         <Link href="#home" className="logo-shimmer relative text-sm font-semibold tracking-[0.18em] text-[--text-primary]">

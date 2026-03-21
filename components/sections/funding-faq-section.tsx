@@ -1,3 +1,5 @@
+import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+
 const faqs = [
   {
     question: "How is private funding different from traditional fixed deposits?",
@@ -34,6 +36,7 @@ const faqs = [
 export function FundingFaqSection() {
   return (
     <section id="funding-faq" className="mx-auto max-w-7xl px-6 py-24 md:px-10">
+      <SectionStickyLabel label="FAQ" />
       <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Funding FAQ</p>
       <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Common Questions Before You Start</h2>
 

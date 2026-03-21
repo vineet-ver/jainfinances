@@ -1,0 +1,32 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+export function MeshGradientBackground({
+  className = "",
+}: {
+  className?: string;
+}) {
+  return (
+    <div className={className} aria-hidden>
+      <motion.div
+        className="absolute -left-24 top-10 h-[34rem] w-[34rem] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(circle at center, rgba(212,175,55,0.26), transparent 68%)" }}
+        animate={{ x: [0, 70, -30, 0], y: [0, -30, 45, 0], scale: [1, 1.08, 0.95, 1] }}
+        transition={{ duration: 24, ease: "easeInOut", repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute right-0 top-1/3 h-[30rem] w-[30rem] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(circle at center, rgba(0,31,63,0.25), transparent 70%)" }}
+        animate={{ x: [0, -60, 25, 0], y: [0, 50, -25, 0], scale: [1, 0.96, 1.06, 1] }}
+        transition={{ duration: 28, ease: "easeInOut", repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute left-1/3 bottom-0 h-[22rem] w-[22rem] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(circle at center, rgba(36,80,122,0.28), transparent 70%)" }}
+        animate={{ x: [0, 30, -22, 0], y: [0, -35, 15, 0], opacity: [0.35, 0.55, 0.4, 0.35] }}
+        transition={{ duration: 20, ease: "easeInOut", repeat: Infinity }}
+      />
+    </div>
+  );
+}

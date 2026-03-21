@@ -19,8 +19,10 @@ export const NAV_LINKS = [
 ] as const;
 
 export const SERVICE_OPTIONS = [
-  "Loan Services",
-  "Real Estate Advisory",
+  "Mutual Funds & Investment Services",
+  "Real Estate Services",
+  "Insurance Services",
+  "Loan & Finance Services",
   "Private Funding",
-  "Investment Structuring",
+  "Comprehensive Financial Planning",
 ] as const;

@@ -1,3 +1,5 @@
+import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+
 const lenderEligibility = [
   "Resident Indian individuals seeking portfolio diversification",
   "Professionals and business owners with moderate-to-high risk appetite",
@@ -23,6 +25,7 @@ const documentationChecklist = [
 export function FundingEligibilitySection() {
   return (
     <section id="funding-eligibility" className="mx-auto max-w-7xl px-6 py-24 md:px-10">
+      <SectionStickyLabel label="Eligibility" />
       <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Funding Eligibility</p>
       <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Who This Model Is Built For</h2>
 

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "perf:lighthouse": "lighthouse http://localhost:3000 --only-categories=performance,accessibility,best-practices,seo --chrome-flags=\"--headless\" --output=html --output-path=./.lighthouse-report.html",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -35,6 +36,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.0",
+    "lighthouse": "^12.8.1",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",

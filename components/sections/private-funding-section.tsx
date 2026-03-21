@@ -1,3 +1,10 @@
+"use client";
+
+import { CinematicReveal, ParallaxLayer } from "@/components/ui/cinematic";
+import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+import { shimmerBlurDataUrl } from "@/lib/blur";
+import Image from "next/image";
+
 const lenderSteps = [
   "Registration",
   "Lender profile approval",
@@ -35,9 +42,11 @@ const snapshots = [
 
 export function PrivateFundingSection() {
   return (
-    <section id="private-funding" className="mx-auto max-w-7xl px-6 py-24 md:px-10">
+    <section id="private-funding" className="relative mx-auto max-w-7xl overflow-hidden px-6 py-24 md:px-10">
+      <ParallaxLayer depth={40} className="pointer-events-none absolute -right-16 top-8 h-60 w-60 rounded-full bg-[--brand-solid]/12 blur-3xl" />
+      <SectionStickyLabel label="Private Funding" />
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-        <div>
+        <CinematicReveal>
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Private Funding</p>
           <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">P2P-Inspired Lending Framework</h2>
           <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[--text-secondary] md:text-base">
@@ -53,10 +62,34 @@ export function PrivateFundingSection() {
               </article>
             ))}
           </div>
-        </div>
+        </CinematicReveal>
 
-        <div className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
+        <CinematicReveal delay={0.1} className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
           <p className="text-xs uppercase tracking-[0.18em] text-[--text-secondary]">How It Works For Lenders</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
+              <Image
+                src="/private-fund1.jfif"
+                alt="Private funding insights"
+                fill
+                sizes="(max-width: 768px) 100vw, 300px"
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL={shimmerBlurDataUrl(300, 160)}
+              />
+            </div>
+            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
+              <Image
+                src="/loan1.jfif"
+                alt="Loan structuring support"
+                fill
+                sizes="(max-width: 768px) 100vw, 300px"
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL={shimmerBlurDataUrl(300, 160)}
+              />
+            </div>
+          </div>
           <ol className="mt-5 grid gap-3">
             {lenderSteps.map((step, index) => (
               <li key={step} className="flex items-start gap-3 rounded-xl border border-[--brand-border] bg-[--surface-2] p-3">
@@ -67,10 +100,10 @@ export function PrivateFundingSection() {
               </li>
             ))}
           </ol>
-        </div>
+        </CinematicReveal>
       </div>
 
-      <div className="mt-10 rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
+      <CinematicReveal delay={0.15} className="mt-10 rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h3 className="font-display text-3xl text-[--text-primary] md:text-4xl">Funding Snapshot Patterns</h3>
           <p className="text-xs uppercase tracking-[0.14em] text-[--text-secondary]">Amount | Rate | Duration</p>
@@ -91,7 +124,7 @@ export function PrivateFundingSection() {
           Important: As with platform-based private lending models, repayment outcomes are typically best-effort and
           lender decisions remain discretionary. This section is for process transparency and informed decision support.
         </p>
-      </div>
+      </CinematicReveal>
     </section>
   );
 }

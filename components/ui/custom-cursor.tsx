@@ -43,8 +43,10 @@ export function CustomCursor() {
     <motion.div
       aria-hidden
       className={cn(
-        "pointer-events-none fixed left-0 top-0 z-[100] hidden rounded-full border border-[--brand-border] mix-blend-difference md:block",
-        active ? "h-14 w-14 bg-white/15" : "h-5 w-5 bg-transparent",
+        "pointer-events-none fixed left-0 top-0 z-100 hidden rounded-full border md:block",
+        active
+          ? "h-14 w-14 border-[--brand-solid]/55 bg-[--brand-solid]/16 shadow-[0_0_0_1px_rgba(255,255,255,0.25),0_0_28px_rgba(0,31,63,0.3)]"
+          : "h-5 w-5 border-[--brand-solid]/75 bg-[--brand-solid] shadow-[0_0_0_1px_rgba(255,255,255,0.35),0_0_16px_rgba(0,31,63,0.25)]",
       )}
       style={{ x: springX, y: springY, opacity: visible ? 1 : 0 }}
       transition={{ type: "spring", damping: 24, stiffness: 380 }}

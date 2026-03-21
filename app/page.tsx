@@ -5,11 +5,14 @@ import { FundingRiskSection } from "@/components/sections/funding-risk-section";
 import { HeroSection } from "@/components/sections/hero-section";
 import { InquirySection } from "@/components/sections/inquiry-section";
 import { OwnerSection } from "@/components/sections/owner-section";
+import { ServicesCtaRibbon } from "@/components/sections/services-cta-ribbon";
 import { PrivateFundingSection } from "@/components/sections/private-funding-section";
 import { ServicesSection } from "@/components/sections/services-section";
 import { ShowcaseSection } from "@/components/sections/showcase-section";
 import { TrustSection } from "@/components/sections/trust-section";
 import { WhatsAppConcierge } from "@/components/whatsapp-concierge";
+import { QuickActions } from "@/components/ui/quick-actions";
+import { SectionWipe } from "@/components/ui/section-wipe";
 import { CONTACT } from "@/lib/constants";
 
 export default function Home() {
@@ -18,15 +21,34 @@ export default function Home() {
       <Navbar />
       <main>
         <HeroSection />
-        <ServicesSection />
-        <PrivateFundingSection />
-        <FundingEligibilitySection />
-        <FundingRiskSection />
-        <FundingFaqSection />
-        <ShowcaseSection />
-        <TrustSection />
-        <OwnerSection />
-        <InquirySection />
+        <SectionWipe>
+          <ServicesSection />
+        </SectionWipe>
+        <ServicesCtaRibbon />
+        <SectionWipe>
+          <PrivateFundingSection />
+        </SectionWipe>
+        <SectionWipe>
+          <FundingEligibilitySection />
+        </SectionWipe>
+        <SectionWipe>
+          <FundingRiskSection />
+        </SectionWipe>
+        <SectionWipe>
+          <FundingFaqSection />
+        </SectionWipe>
+        <SectionWipe>
+          <ShowcaseSection />
+        </SectionWipe>
+        <SectionWipe>
+          <TrustSection />
+        </SectionWipe>
+        <SectionWipe>
+          <OwnerSection />
+        </SectionWipe>
+        <SectionWipe>
+          <InquirySection />
+        </SectionWipe>
       </main>
 
       <footer className="border-t border-[--brand-border] px-6 py-10 md:px-10">
@@ -38,6 +60,7 @@ export default function Home() {
       </footer>
 
       <WhatsAppConcierge />
+      <QuickActions />
     </div>
   );
 }
