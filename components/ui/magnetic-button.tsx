@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import gsap from "gsap";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type MagneticButtonProps = {
   href: string;
@@ -13,6 +13,15 @@ type MagneticButtonProps = {
 
 export function MagneticButton({ href, label, className }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1024px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   const reset = () => {
     if (!ref.current) return;
@@ -26,6 +35,7 @@ export function MagneticButton({ href, label, className }: MagneticButtonProps) 
   };
 
   const onMove = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isMobile) return;
     if (!ref.current) return;
 
     const bounds = ref.current.getBoundingClientRect();
@@ -53,8 +63,8 @@ export function MagneticButton({ href, label, className }: MagneticButtonProps) 
     <Link
       ref={ref}
       href={href}
-      onMouseMove={onMove}
-      onMouseLeave={reset}
+      onMouseMove={isMobile ? undefined : onMove}
+      onMouseLeave={isMobile ? undefined : reset}
       data-cursor="active"
       className={cn(
         "group relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[--brand-border] px-7 py-3 text-sm font-semibold tracking-[0.14em] text-[--text-primary] transition-all duration-300 hover:border-[--brand-solid]",
