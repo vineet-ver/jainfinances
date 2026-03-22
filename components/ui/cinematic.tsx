@@ -78,13 +78,23 @@ export function CinematicReveal({
   once = true,
   amount = 0.35,
 }: CinematicRevealProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y, scale: 0.985 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once, amount }}
-      transition={{ duration, delay, ease: [0.2, 0.8, 0.2, 1] }}
+      transition={{ duration: isMobile ? duration * 0.65 : duration, delay: isMobile ? 0 : delay, ease: [0.2, 0.8, 0.2, 1] }}
     >
       {children}
     </motion.div>
@@ -124,7 +134,7 @@ export function ParallaxLayer({
   }, []);
 
   useEffect(() => {
-    if (!enableVelocity || prefersReducedMotion) return;
+    if (!enableVelocity || prefersReducedMotion || isMobile) return;
 
     let lastScrollY = 0;
     let lastTime = Date.now();
@@ -146,10 +156,10 @@ export function ParallaxLayer({
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [enableVelocity, prefersReducedMotion]);
+  }, [enableVelocity, prefersReducedMotion, isMobile]);
 
-  const baseDepth = prefersReducedMotion ? 0 : isMobile ? depth * 0.42 : depth;
-  const velocityBoost = enableVelocity ? 0.65 + velocity * 1.75 : 1;
+  const baseDepth = prefersReducedMotion || isMobile ? 0 : depth;
+  const velocityBoost = enableVelocity && !isMobile ? 0.65 + velocity * 1.75 : 1;
   const effectiveDepth = Math.min(baseDepth * velocityBoost, baseDepth * 2.15);
   const y = useTransform(scrollYProgress, [0, 1], [effectiveDepth, -effectiveDepth]);
 

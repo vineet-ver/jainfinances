@@ -159,8 +159,19 @@ function ServiceCard({
   supportingImages: readonly string[];
 }) {
   const [sortableOfferings, setSortableOfferings] = useState<string[]>([...offerings]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (isMobile) return;
+
     const rect = event.currentTarget.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
@@ -182,12 +193,12 @@ function ServiceCard({
 
   return (
     <motion.article
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
+      onMouseMove={isMobile ? undefined : onMove}
+      onMouseLeave={isMobile ? undefined : onLeave}
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      style={{ transform: "perspective(1300px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))" }}
+      style={isMobile ? {} : { transform: "perspective(1300px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))" }}
       className="spotlight-card group relative overflow-hidden rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 transition-transform duration-200"
     >
       <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[--brand-border] bg-[--surface-2] px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[--text-secondary]">
@@ -195,7 +206,7 @@ function ServiceCard({
         {eyebrow}
       </div>
       <motion.div
-        whileHover={{ rotate: 8, scale: 1.07 }}
+        whileHover={isMobile ? {} : { rotate: 8, scale: 1.07 }}
         transition={{ type: "spring", stiffness: 260, damping: 16 }}
         className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-[--brand-border] bg-[--surface-2] text-[--brand-solid]"
       >
@@ -205,18 +216,19 @@ function ServiceCard({
       <p className="text-sm leading-relaxed text-[--text-secondary]">{description}</p>
 
       <div className="mt-5 grid gap-3 md:grid-cols-[1.35fr_0.65fr]">
-        <div className="image-sheen premium-card relative h-52 overflow-hidden rounded-2xl border border-[--brand-border]">
+        <div className="image-sheen premium-card relative h-40 overflow-hidden rounded-2xl border border-[--brand-border] md:h-52">
           <Image
             src={heroImage}
             alt={`${title} visual`}
             fill
-            sizes="(max-width: 768px) 100vw, 620px"
+            sizes="(max-width: 768px) 85vw, 620px"
             className="object-cover"
             placeholder="blur"
             blurDataURL={shimmerBlurDataUrl(620, 340)}
+            loading="lazy"
           />
         </div>
-        <div className="grid gap-3">
+        <div className="hidden gap-3 md:grid">
           {supportingImages.map((image) => (
             <div key={image} className="image-sheen premium-card relative h-24.5 overflow-hidden rounded-2xl border border-[--brand-border]">
               <Image
@@ -227,6 +239,7 @@ function ServiceCard({
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL={shimmerBlurDataUrl(220, 120)}
+                loading="lazy"
               />
             </div>
           ))}
@@ -234,22 +247,38 @@ function ServiceCard({
       </div>
 
       <div className="mt-6">
-        <p className="mb-3 text-[10px] uppercase tracking-[0.14em] text-[--text-secondary]">Drag To Reorder Priorities</p>
-        <Reorder.Group axis="y" values={sortableOfferings} onReorder={setSortableOfferings} className="grid gap-2.5">
-          {sortableOfferings.map((item, idx) => (
-            <Reorder.Item
-              key={item}
-              value={item}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.03, duration: 0.28, ease: "easeOut" }}
-              className="flex cursor-grab items-start gap-2.5 rounded-xl border border-[--brand-border]/45 bg-[--surface-2]/65 px-3 py-2.5 text-sm leading-relaxed text-[--text-primary] active:cursor-grabbing"
-            >
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[--brand-solid]" />
-              <span className="text-[--text-secondary]">{item}</span>
-            </Reorder.Item>
-          ))}
-        </Reorder.Group>
+        <p className="mb-3 text-[10px] uppercase tracking-[0.14em] text-[--text-secondary]">
+          {isMobile ? "Key Offerings" : "Drag To Reorder Priorities"}
+        </p>
+        {isMobile ? (
+          <div className="grid gap-2.5">
+            {sortableOfferings.slice(0, 6).map((item) => (
+              <div
+                key={item}
+                className="flex items-start gap-2.5 rounded-xl border border-[--brand-border]/45 bg-[--surface-2]/65 px-3 py-2.5 text-sm leading-relaxed text-[--text-primary]"
+              >
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[--brand-solid]" />
+                <span className="text-[--text-secondary]">{item}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Reorder.Group axis="y" values={sortableOfferings} onReorder={setSortableOfferings} className="grid gap-2.5">
+            {sortableOfferings.map((item, idx) => (
+              <Reorder.Item
+                key={item}
+                value={item}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.03, duration: 0.28, ease: "easeOut" }}
+                className="flex cursor-grab items-start gap-2.5 rounded-xl border border-[--brand-border]/45 bg-[--surface-2]/65 px-3 py-2.5 text-sm leading-relaxed text-[--text-primary] active:cursor-grabbing"
+              >
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[--brand-solid]" />
+                <span className="text-[--text-secondary]">{item}</span>
+              </Reorder.Item>
+            ))}
+          </Reorder.Group>
+        )}
       </div>
     </motion.article>
   );
@@ -257,13 +286,24 @@ function ServiceCard({
 
 export function ServicesSection() {
   const [activeTab, setActiveTab] = useState<ServiceTabKey>("investment");
+  const [selectedTab, setSelectedTab] = useState<ServiceTabKey>("investment");
   const [isTabLoading, setIsTabLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const switchTimerRef = useRef<number | null>(null);
+
   const activeService = useMemo(
     () => serviceVerticals.find((service) => service.key === activeTab) ?? serviceVerticals[0],
     [activeTab],
   );
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -274,7 +314,8 @@ export function ServicesSection() {
   }, []);
 
   const switchToTab = (nextTab: ServiceTabKey) => {
-    if (nextTab === activeTab || isTabLoading) return;
+    if (nextTab === activeTab && !isTabLoading) return;
+    setSelectedTab(nextTab);
     setIsTabLoading(true);
 
     if (switchTimerRef.current) {
@@ -311,16 +352,19 @@ export function ServicesSection() {
 
   return (
     <section id="services" className="relative mx-auto max-w-7xl overflow-hidden px-6 py-24 md:px-10">
-      <ParallaxLayer depth={50} useVelocity className="pointer-events-none absolute -left-16 top-28 h-48 w-48 rounded-full bg-[--brand-solid]/10 blur-3xl" />
-      <ParallaxLayer depth={34} className="pointer-events-none absolute -right-24 bottom-24 h-64 w-64 rounded-full bg-amber-300/12 blur-3xl" />
+      {!isMobile && (
+        <>
+          <ParallaxLayer depth={50} useVelocity className="pointer-events-none absolute -left-16 top-28 h-48 w-48 rounded-full bg-[--brand-solid]/10 blur-3xl" />
+          <ParallaxLayer depth={34} className="pointer-events-none absolute -right-24 bottom-24 h-64 w-64 rounded-full bg-amber-300/12 blur-3xl" />
+        </>
+      )}
       <SectionStickyLabel label="Services" />
       <div className="mb-10 flex items-end justify-between gap-6">
         <div>
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Services</p>
           <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Comprehensive Financial Ecosystem</h2>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[--text-secondary] md:text-base">
-            A single advisory desk for investments, property, insurance, and structured finance. Every solution is
-            aligned to risk appetite, timeline, documentation readiness, and long-term wealth outcomes.
+            A single advisory desk for investments, property, insurance, and structured finance. Every solution is aligned to risk appetite, timeline, documentation readiness, and long-term wealth outcomes.
           </p>
         </div>
       </div>
@@ -352,13 +396,15 @@ export function ServicesSection() {
               type="button"
               onClick={() => switchToTab(tab.key)}
               whileTap={{ scale: 0.97 }}
+              aria-pressed={selectedTab === tab.key}
               className={cn(
-                "rounded-xl border px-4 py-3 text-sm font-medium transition",
-                activeTab === tab.key
-                  ? "border-[--brand-solid] bg-[--surface-2] text-[--text-primary]"
-                  : "border-[--brand-border] text-[--text-secondary] hover:border-[--brand-solid] hover:text-[--text-primary]",
+                "relative rounded-xl border px-4 py-3 text-sm font-medium transition",
+                selectedTab === tab.key
+                  ? "border-[--brand-solid] bg-[--brand-solid] text-white shadow-[0_10px_30px_rgba(0,31,63,0.28)]"
+                  : "border-[--brand-border] bg-[--surface-2]/55 text-[--text-secondary] hover:border-[--brand-solid] hover:text-[--text-primary]",
               )}
             >
+              {selectedTab === tab.key ? <span className="mr-2 inline-block h-2 w-2 rounded-full bg-white align-middle" /> : null}
               {tab.label}
             </motion.button>
           ))}
@@ -383,7 +429,7 @@ export function ServicesSection() {
               initial={{ opacity: 0, y: 24, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.99 }}
-              transition={{ duration: 0.46, ease: [0.22, 0.8, 0.2, 1] }}
+              transition={{ duration: isMobile ? 0.3 : 0.46, ease: [0.22, 0.8, 0.2, 1] }}
             >
               <ServiceCard
                 title={activeService.title}

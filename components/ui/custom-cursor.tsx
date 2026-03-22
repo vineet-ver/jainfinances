@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export function CustomCursor() {
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
 
@@ -14,6 +15,17 @@ export function CustomCursor() {
   const springY = useSpring(y, { damping: 28, stiffness: 420, mass: 0.25 });
 
   useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    // Don't attach event listeners on mobile
+    if (isMobile) return;
+
     const move = (event: MouseEvent) => {
       x.set(event.clientX - 10);
       y.set(event.clientY - 10);
@@ -37,7 +49,12 @@ export function CustomCursor() {
       window.removeEventListener("mouseout", hide);
       window.removeEventListener("mouseover", setHover);
     };
-  }, [x, y]);
+  }, [x, y, isMobile]);
+
+  // Don't render on mobile
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <motion.div

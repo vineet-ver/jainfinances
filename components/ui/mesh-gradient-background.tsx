@@ -1,12 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export function MeshGradientBackground({
   className = "",
 }: {
   className?: string;
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  // Disable on mobile or reduced motion
+  if (isMobile || prefersReducedMotion) {
+    return (
+      <div className={className} aria-hidden>
+        <div
+          className="absolute -left-24 top-10 h-136 w-136 rounded-full blur-3xl"
+          style={{ background: "radial-gradient(circle at center, rgba(212,175,55,0.26), transparent 68%)" }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={className} aria-hidden>
       <motion.div

@@ -8,29 +8,62 @@ import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
 import { shimmerBlurDataUrl } from "@/lib/blur";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const headline = "Pioneering Financial Excellence for the Discerning Client.";
 
 export function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   return (
     <section id="home" className="relative min-h-screen overflow-hidden px-6 pb-20 pt-36 md:px-10">
       <div className="hero-bg absolute inset-0" aria-hidden />
-      <MeshGradientBackground className="pointer-events-none absolute inset-0 opacity-35 mix-blend-screen" />
+      <MeshGradientBackground className="pointer-events-none absolute inset-0 hidden opacity-35 mix-blend-screen md:block" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <ParallaxLayer depth={120} useVelocity className="absolute inset-0 opacity-35">
-          <Image
-            src="/building4.png"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover"
-            placeholder="blur"
-            blurDataURL={shimmerBlurDataUrl(1600, 900)}
-            priority
-          />
-        </ParallaxLayer>
-        <ParallaxLayer depth={70} useVelocity className="absolute -left-10 top-24 h-56 w-56 rounded-full bg-[--brand-solid]/15 blur-3xl md:h-72 md:w-72" />
-        <ParallaxLayer depth={45} className="absolute -right-12 bottom-10 h-60 w-60 rounded-full bg-amber-300/15 blur-3xl md:h-80 md:w-80" />
+        {isMobile ? (
+          <div className="absolute inset-0 opacity-30">
+            <Image
+              src="/building4.png"
+              alt=""
+              fill
+              sizes="100vw"
+              quality={40}
+              className="object-cover"
+              placeholder="blur"
+              blurDataURL={shimmerBlurDataUrl(1200, 675)}
+              priority
+            />
+          </div>
+        ) : (
+          <ParallaxLayer depth={120} useVelocity className="absolute inset-0 opacity-35">
+            <Image
+              src="/building4.png"
+              alt=""
+              fill
+              sizes="100vw"
+              quality={78}
+              className="object-cover"
+              placeholder="blur"
+              blurDataURL={shimmerBlurDataUrl(1600, 900)}
+              priority
+            />
+          </ParallaxLayer>
+        )}
+        {!isMobile && (
+          <>
+            <ParallaxLayer depth={70} useVelocity className="absolute -left-10 top-24 hidden h-56 w-56 rounded-full bg-[--brand-solid]/15 blur-3xl md:block md:h-72 md:w-72" />
+            <ParallaxLayer depth={45} className="absolute -right-12 bottom-10 hidden h-60 w-60 rounded-full bg-amber-300/15 blur-3xl md:block md:h-80 md:w-80" />
+          </>
+        )}
       </div>
 
       <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-8">
@@ -60,7 +93,7 @@ export function HeroSection() {
 
         <div className="grid w-full max-w-4xl gap-4 sm:grid-cols-2">
           <CinematicReveal delay={0.2} amount={0.6} className="premium-card relative overflow-hidden rounded-2xl border border-[--brand-border] bg-[--surface-1] p-3">
-            <div className="image-sheen relative h-36 overflow-hidden rounded-xl md:h-44">
+            <div className="image-sheen relative h-28 overflow-hidden rounded-xl md:h-44">
               <Image
                 src="/investment2.png"
                 alt="Premium wealth strategy"
@@ -69,6 +102,7 @@ export function HeroSection() {
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL={shimmerBlurDataUrl(420, 240)}
+                loading="lazy"
               />
             </div>
             <p className="mt-3 text-xs uppercase tracking-[0.16em] text-[--text-secondary]">Investment Intelligence</p>
@@ -76,7 +110,7 @@ export function HeroSection() {
           </CinematicReveal>
 
           <CinematicReveal delay={0.32} amount={0.6} className="premium-card relative overflow-hidden rounded-2xl border border-[--brand-border] bg-[--surface-1] p-3">
-            <div className="image-sheen relative h-36 overflow-hidden rounded-xl md:h-44">
+            <div className="image-sheen relative h-28 overflow-hidden rounded-xl md:h-44">
               <Image
                 src="/building2.png"
                 alt="Prime property advisory"
@@ -85,6 +119,7 @@ export function HeroSection() {
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL={shimmerBlurDataUrl(420, 240)}
+                loading="lazy"
               />
             </div>
             <p className="mt-3 text-xs uppercase tracking-[0.16em] text-[--text-secondary]">Property & Credit Structuring</p>

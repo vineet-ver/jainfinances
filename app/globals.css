@@ -5,6 +5,7 @@
   --bg-radial: radial-gradient(circle at 50% 30%, #ffffff 0%, #f1efe9 55%, #e8e3d9 100%);
   --surface-1: rgba(255, 255, 255, 0.7);
   --surface-2: rgba(255, 255, 255, 0.92);
+  --mobile-menu-bg: #f4f1ea;
   --text-primary: #1a1a1a;
   --text-secondary: #4b5563;
   --brand-solid: #001f3f;
@@ -17,6 +18,7 @@
   --bg-radial: radial-gradient(circle at 50% 35%, #0a0a0a 0%, #050505 65%, #020202 100%);
   --surface-1: rgba(10, 10, 10, 0.72);
   --surface-2: rgba(18, 18, 18, 0.85);
+  --mobile-menu-bg: #0b0b0b;
   --text-primary: #e5e5e5;
   --text-secondary: #a1a1aa;
   --brand-solid: #d4af37;
@@ -98,6 +100,68 @@ button {
     radial-gradient(circle at 80% 40%, rgba(212, 175, 55, 0.15), transparent 42%),
     linear-gradient(110deg, transparent 10%, rgba(212, 175, 55, 0.07) 50%, transparent 90%);
   animation: slowDrift 22s ease-in-out infinite alternate;
+}
+
+@media (max-width: 768px) {
+  .hero-bg {
+    animation: none;
+  }
+
+  .image-sheen::after {
+    animation: none;
+    transform: none;
+    opacity: 0.18;
+  }
+
+  body {
+    cursor: auto;
+  }
+
+  /* Disable hover effects on mobile */
+  .premium-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .spotlight-card:hover::before {
+    opacity: 0;
+  }
+
+  .nav-link:hover::after {
+    width: 0;
+  }
+
+  .section-sticky-label:hover {
+    transform: none;
+    border-color: var(--brand-border);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  }
+
+  .motion-surface:hover {
+    transform: none;
+  }
+
+  /* Disable expensive animations */
+  .marquee-track {
+    animation: none;
+  }
+
+  .animate-float {
+    animation: none;
+  }
+
+  .logo-shimmer::after {
+    animation: none;
+  }
+
+  .concierge-breathe {
+    animation: none;
+  }
+
+  /* Reduce transition durations on mobile */
+  * {
+    --tw-transition-duration: 150ms;
+  }
 }
 
 .dark .hero-bg {

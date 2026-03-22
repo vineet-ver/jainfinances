@@ -1,12 +1,26 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useScrollVelocity } from "./scroll-velocity";
 
 export function AmbientElements() {
   const { velocity } = useScrollVelocity();
   const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  // Completely disable on mobile or reduced motion
+  if (isMobile || prefersReducedMotion) {
+    return null;
+  }
 
   // Initialize random seed based on component creation time
   const getSeededRandom = (seed: number): number => {
@@ -23,7 +37,8 @@ export function AmbientElements() {
       "rgba(255, 215, 0, 0.07)",
     ];
 
-    return Array.from({ length: 12 }, (_, i) => ({
+    // Reduce from 12 to 6 elements even on desktop
+    return Array.from({ length: 6 }, (_, i) => ({
       id: i,
       x: getSeededRandom(i * 2.71) * 100,
       y: getSeededRandom(i * 3.14) * 100,
@@ -34,22 +49,19 @@ export function AmbientElements() {
     }));
   }, []);
 
-  if (prefersReducedMotion) {
-    return null;
-  }
-
   return (
     <>
       {elements.map((element) => (
         <motion.div
           key={element.id}
-          className="fixed rounded-full pointer-events-none -z-10 blur-3xl"
+          className="fixed rounded-full pointer-events-none -z-10 blur-3xl will-change-transform"
           style={{
             left: `${element.x}%`,
             top: `${element.y}%`,
             width: element.size,
             height: element.size,
             backgroundColor: element.color,
+            contain: "layout style paint",
           }}
           animate={{
             y: [0, -30, 0],

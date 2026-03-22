@@ -4,6 +4,7 @@ import { CinematicReveal, ParallaxLayer } from "@/components/ui/cinematic";
 import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
 import { shimmerBlurDataUrl } from "@/lib/blur";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const lenderSteps = [
   "Registration",
@@ -41,9 +42,19 @@ const snapshots = [
 ];
 
 export function PrivateFundingSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   return (
     <section id="private-funding" className="relative mx-auto max-w-7xl overflow-hidden px-6 py-24 md:px-10">
-      <ParallaxLayer depth={40} className="pointer-events-none absolute -right-16 top-8 h-60 w-60 rounded-full bg-[--brand-solid]/12 blur-3xl" />
+      {!isMobile && <ParallaxLayer depth={40} className="pointer-events-none absolute -right-16 top-8 h-60 w-60 rounded-full bg-[--brand-solid]/12 blur-3xl" />}
       <SectionStickyLabel label="Private Funding" />
       <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
         <CinematicReveal>
@@ -76,6 +87,7 @@ export function PrivateFundingSection() {
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL={shimmerBlurDataUrl(300, 160)}
+                loading="lazy"
               />
             </div>
             <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
@@ -87,6 +99,7 @@ export function PrivateFundingSection() {
                 className="object-cover"
                 placeholder="blur"
                 blurDataURL={shimmerBlurDataUrl(300, 160)}
+                loading="lazy"
               />
             </div>
           </div>

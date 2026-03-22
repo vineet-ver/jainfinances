@@ -10,11 +10,23 @@ const ScrollVelocityContext = createContext<ScrollVelocityContextType | undefine
 export function ScrollVelocityProvider({ children }: { children: React.ReactNode }) {
   const [velocity, setVelocity] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const lastScrollYRef = useRef(0);
   const lastTimeRef = useRef<number | null>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    // Skip velocity tracking on mobile for performance
+    if (isMobile) return;
+
     if (!lastTimeRef.current) {
       lastTimeRef.current = Date.now();
     }
@@ -52,7 +64,7 @@ export function ScrollVelocityProvider({ children }: { children: React.ReactNode
         clearTimeout(scrollTimeoutRef.current);
       }
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <ScrollVelocityContext.Provider value={{ velocity, isScrolling }}>
