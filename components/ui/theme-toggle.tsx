@@ -13,13 +13,13 @@ export function ThemeToggle() {
     <button
       aria-label="Toggle theme"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="relative flex h-9 w-[74px] items-center rounded-full border border-[--brand-border] bg-[--surface-2] px-1 shadow-sm transition-colors hover:bg-[--surface-1]"
+      className="relative flex h-9 w-18.5 items-center rounded-full border border-[--brand-border] bg-[--surface-2] px-1 shadow-sm transition-colors hover:bg-[--surface-1]"
       data-cursor="active"
     >
       <motion.div
         layout
         layoutId="theme-pill"
-        className="absolute h-7 w-7 rounded-full bg-[var(--brand-gradient)] shadow-[0_0_24px_rgba(212,175,55,0.35)]"
+        className="absolute h-7 w-7 rounded-full bg-(--brand-gradient) shadow-[0_0_24px_rgba(212,175,55,0.35)]"
         animate={{ x: isDark ? 2 : 34 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
       />

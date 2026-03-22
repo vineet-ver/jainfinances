@@ -2,11 +2,12 @@
 
 import { CinematicReveal, ParallaxLayer } from "@/components/ui/cinematic";
 import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { shimmerBlurDataUrl } from "@/lib/blur";
 import { Building2, CheckCircle2, HandCoins, PieChart, ShieldCheck } from "lucide-react";
 import { AnimatePresence, motion, Reorder } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
 const serviceTabs = [
@@ -26,8 +27,8 @@ const serviceVerticals = [
     description:
       "Research-backed investment structuring across mutual funds, equities, fixed income, retirement products, and global exposure.",
     icon: PieChart,
-    heroImage: "/investment1.jfif",
-    supportingImages: ["/investment2.jfif", "/investment3.jfif"],
+    heroImage: "/investment1.png",
+    supportingImages: ["/investment2.png", "/investment3.png"],
     offerings: [
       "Mutual Funds: equity, debt, hybrid, ELSS, SIP and lumpsum planning.",
       "Equity and stock advisory with portfolio guidance and trading support.",
@@ -48,8 +49,8 @@ const serviceVerticals = [
     description:
       "Transaction-to-tenancy support for residential, commercial, industrial, luxury, and NRI-led real estate requirements.",
     icon: Building2,
-    heroImage: "/building3.jfif",
-    supportingImages: ["/building1.jfif", "/building5.jfif"],
+    heroImage: "/building3.png",
+    supportingImages: ["/building1.png", "/building5.png"],
     offerings: [
       "Buying and selling support for residential, commercial, plots and luxury properties.",
       "Rental and leasing with tenant-landlord matchmaking, agreements and renewals.",
@@ -70,8 +71,8 @@ const serviceVerticals = [
     description:
       "Personal and business risk-cover architecture with claim support, renewals, portability, and ongoing advisory.",
     icon: ShieldCheck,
-    heroImage: "/building2.jfif",
-    supportingImages: ["/private-fund1.jfif", "/investment1.jfif"],
+    heroImage: "/building2.png",
+    supportingImages: ["/private-fund1.png", "/investment1.png"],
     offerings: [
       "Life insurance: term, whole life, endowment and ULIP plans.",
       "Health insurance across individual, family floater, senior citizen and critical illness covers.",
@@ -92,8 +93,8 @@ const serviceVerticals = [
     description:
       "End-to-end financing assistance from eligibility checks to disbursal tracking, restructuring, and protection overlays.",
     icon: HandCoins,
-    heroImage: "/loan1.jfif",
-    supportingImages: ["/building4.jfif", "/private-fund1.jfif"],
+    heroImage: "/loan1.png",
+    supportingImages: ["/building4.png", "/private-fund1.png"],
     offerings: [
       "Personal loans with quick approvals, minimal paperwork and flexible tenures.",
       "Home loans and loan against property with balance transfer and top-up options.",
@@ -115,6 +116,30 @@ const deliverySteps = [
   "Product shortlisting with cost-benefit comparison",
   "Execution, documentation and periodic review",
 ] as const;
+
+function ServiceCardSkeleton() {
+  return (
+    <article className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6">
+      <Skeleton className="mb-4 h-6 w-40 rounded-full" />
+      <Skeleton className="mb-4 h-12 w-12 rounded-2xl" />
+      <Skeleton className="mb-3 h-8 w-2/3" />
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="mt-2 h-4 w-5/6" />
+      <div className="mt-5 grid gap-3 md:grid-cols-[1.35fr_0.65fr]">
+        <Skeleton className="h-52 w-full rounded-2xl" />
+        <div className="grid gap-3">
+          <Skeleton className="h-24.5 w-full rounded-2xl" />
+          <Skeleton className="h-24.5 w-full rounded-2xl" />
+        </div>
+      </div>
+      <div className="mt-6 grid gap-2.5">
+        <Skeleton className="h-10 w-full rounded-xl" />
+        <Skeleton className="h-10 w-full rounded-xl" />
+        <Skeleton className="h-10 w-full rounded-xl" />
+      </div>
+    </article>
+  );
+}
 
 function ServiceCard({
   title,
@@ -232,16 +257,41 @@ function ServiceCard({
 
 export function ServicesSection() {
   const [activeTab, setActiveTab] = useState<ServiceTabKey>("investment");
+  const [isTabLoading, setIsTabLoading] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const switchTimerRef = useRef<number | null>(null);
   const activeService = useMemo(
     () => serviceVerticals.find((service) => service.key === activeTab) ?? serviceVerticals[0],
     [activeTab],
   );
 
+  useEffect(() => {
+    return () => {
+      if (switchTimerRef.current) {
+        window.clearTimeout(switchTimerRef.current);
+      }
+    };
+  }, []);
+
+  const switchToTab = (nextTab: ServiceTabKey) => {
+    if (nextTab === activeTab || isTabLoading) return;
+    setIsTabLoading(true);
+
+    if (switchTimerRef.current) {
+      window.clearTimeout(switchTimerRef.current);
+    }
+
+    switchTimerRef.current = window.setTimeout(() => {
+      setActiveTab(nextTab);
+      setIsTabLoading(false);
+      switchTimerRef.current = null;
+    }, 260);
+  };
+
   const moveTab = (direction: 1 | -1) => {
     const index = serviceTabs.findIndex((tab) => tab.key === activeTab);
     const next = (index + direction + serviceTabs.length) % serviceTabs.length;
-    setActiveTab(serviceTabs[next].key);
+    switchToTab(serviceTabs[next].key);
   };
 
   const onTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -300,7 +350,7 @@ export function ServicesSection() {
             <motion.button
               key={tab.key}
               type="button"
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => switchToTab(tab.key)}
               whileTap={{ scale: 0.97 }}
               className={cn(
                 "rounded-xl border px-4 py-3 text-sm font-medium transition",
@@ -317,23 +367,35 @@ export function ServicesSection() {
 
       <div className="grid grid-cols-1 gap-5" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeService.key}
-            initial={{ opacity: 0, y: 24, scale: 0.985 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.99 }}
-            transition={{ duration: 0.46, ease: [0.22, 0.8, 0.2, 1] }}
-          >
-            <ServiceCard
-              title={activeService.title}
-              eyebrow={activeService.eyebrow}
-              description={activeService.description}
-              icon={activeService.icon}
-              offerings={activeService.offerings}
-              heroImage={activeService.heroImage}
-              supportingImages={activeService.supportingImages}
-            />
-          </motion.div>
+          {isTabLoading ? (
+            <motion.div
+              key="services-skeleton"
+              initial={{ opacity: 0.4 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ServiceCardSkeleton />
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeService.key}
+              initial={{ opacity: 0, y: 24, scale: 0.985 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.99 }}
+              transition={{ duration: 0.46, ease: [0.22, 0.8, 0.2, 1] }}
+            >
+              <ServiceCard
+                title={activeService.title}
+                eyebrow={activeService.eyebrow}
+                description={activeService.description}
+                icon={activeService.icon}
+                offerings={activeService.offerings}
+                heroImage={activeService.heroImage}
+                supportingImages={activeService.supportingImages}
+              />
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
 

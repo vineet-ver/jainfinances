@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/components/ui/toast";
 import { CONTACT, SERVICE_OPTIONS } from "@/lib/constants";
 import confetti from "canvas-confetti";
@@ -211,6 +212,13 @@ export function InquirySection() {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
+            {sending ? (
+              <div className="mb-4 space-y-3 rounded-2xl border border-[--brand-border] bg-[--surface-2] p-4">
+                <Skeleton className="h-3 w-32" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+              </div>
+            ) : null}
             <p className="mb-3 text-sm uppercase tracking-[0.14em] text-[--text-secondary]">Message</p>
             <textarea
               value={form.message}

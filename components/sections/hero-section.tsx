@@ -19,7 +19,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <ParallaxLayer depth={120} useVelocity className="absolute inset-0 opacity-35">
           <Image
-            src="/building4.jfif"
+            src="/building4.png"
             alt=""
             fill
             sizes="100vw"
@@ -62,7 +62,7 @@ export function HeroSection() {
           <CinematicReveal delay={0.2} amount={0.6} className="premium-card relative overflow-hidden rounded-2xl border border-[--brand-border] bg-[--surface-1] p-3">
             <div className="image-sheen relative h-36 overflow-hidden rounded-xl md:h-44">
               <Image
-                src="/investment2.jfif"
+                src="/investment2.png"
                 alt="Premium wealth strategy"
                 fill
                 sizes="(max-width: 768px) 100vw, 420px"
@@ -78,7 +78,7 @@ export function HeroSection() {
           <CinematicReveal delay={0.32} amount={0.6} className="premium-card relative overflow-hidden rounded-2xl border border-[--brand-border] bg-[--surface-1] p-3">
             <div className="image-sheen relative h-36 overflow-hidden rounded-xl md:h-44">
               <Image
-                src="/building2.jfif"
+                src="/building2.png"
                 alt="Prime property advisory"
                 fill
                 sizes="(max-width: 768px) 100vw, 420px"

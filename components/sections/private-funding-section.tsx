@@ -69,7 +69,7 @@ export function PrivateFundingSection() {
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
               <Image
-                src="/private-fund1.jfif"
+                src="/private-fund1.png"
                 alt="Private funding insights"
                 fill
                 sizes="(max-width: 768px) 100vw, 300px"
@@ -80,7 +80,7 @@ export function PrivateFundingSection() {
             </div>
             <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
               <Image
-                src="/loan1.jfif"
+                src="/loan1.png"
                 alt="Loan structuring support"
                 fill
                 sizes="(max-width: 768px) 100vw, 300px"
