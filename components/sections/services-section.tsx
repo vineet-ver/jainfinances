@@ -291,7 +291,6 @@ export function ServicesSection() {
   const [isMobile, setIsMobile] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const switchTimerRef = useRef<number | null>(null);
-
   const activeService = useMemo(
     () => serviceVerticals.find((service) => service.key === activeTab) ?? serviceVerticals[0],
     [activeTab],
@@ -314,7 +313,7 @@ export function ServicesSection() {
   }, []);
 
   const switchToTab = (nextTab: ServiceTabKey) => {
-    if (nextTab === activeTab && !isTabLoading) return;
+    if (nextTab === activeTab || isTabLoading) return;
     setSelectedTab(nextTab);
     setIsTabLoading(true);
 
