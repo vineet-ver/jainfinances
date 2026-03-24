@@ -1,10 +1,6 @@
-type SectionStickyLabelProps = {
-  label: string;
-};
-
-export function SectionStickyLabel({ label }: SectionStickyLabelProps) {
+export function SectionStickyLabel({ label }: { label: string }) {
   return (
-    <div className="section-sticky-label">
+    <div className="section-label">
       <span>{label}</span>
     </div>
   );

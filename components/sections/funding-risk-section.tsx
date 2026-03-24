@@ -1,73 +1,72 @@
 import { SectionStickyLabel } from "@/components/ui/section-sticky-label";
+import { CinematicReveal } from "@/components/ui/cinematic";
 
-const riskLayers = [
-  {
-    title: "Profile Assessment",
-    detail: "Applicant background, repayment behavior, and affordability indicators are reviewed before listing and participation.",
-  },
-  {
-    title: "Agreement Discipline",
-    detail: "Funding is aligned to documented terms so all parties are clear on tenure, obligations, and payment structure.",
-  },
-  {
-    title: "Repayment Monitoring",
-    detail: "Post-disbursement tracking focuses on EMI flow consistency and early intervention signals where required.",
-  },
-  {
-    title: "Best-Effort Recovery Framework",
-    detail: "Collection and follow-up support can improve outcomes, while preserving the reality that repayment is not guaranteed.",
-  },
+const safetySteps = [
+  { title: "✅ Checking the Borrower", desc: "We verify income, background, and past loan history before approving anyone." },
+  { title: "📝 Clear Agreements", desc: "All terms and conditions are written down and understood by both parties." },
+  { title: "📊 Tracking Monthly EMIs", desc: "We monitor every EMI payment to ensure your money is returned on time." },
+  { title: "🔁 Recovery Support", desc: "If any payment is late, our team follows up to help recover your money." },
 ];
 
-const transparencyPoints = [
-  "Decision to lend remains with the lender",
-  "Platform-style process supports, but does not assure returns",
-  "Borrower opportunities can vary by credit profile and market cycle",
-  "Diversification across multiple opportunities helps concentration control",
-  "Policy and legal disclosures should be reviewed before commitment",
+const reminders = [
+  "You choose who gets your money — we never force anything.",
+  "We manage the process, but we cannot guarantee returns.",
+  "Different borrowers have different risk levels.",
+  "Lending small amounts to many people is safer than one big loan.",
+  "Please read all documents carefully before lending.",
 ];
 
 export function FundingRiskSection() {
   return (
     <section id="funding-risk" className="mx-auto max-w-7xl px-6 py-24 md:px-10">
-      <SectionStickyLabel label="Risk" />
-      <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Risk Framework</p>
-      <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">Governance, Controls, And Clarity</h2>
+      <SectionStickyLabel label="Safety" />
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-2">
-        <article className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
-          <h3 className="font-display text-3xl text-[--text-primary]">Operational Risk Layers</h3>
-          <div className="mt-5 grid gap-4">
-            {riskLayers.map((item) => (
-              <div key={item.title} className="rounded-2xl border border-[--brand-border] bg-[--surface-2] p-4">
-                <p className="font-semibold text-[--text-primary]">{item.title}</p>
-                <p className="mt-1 text-sm leading-relaxed text-[--text-secondary]">{item.detail}</p>
-              </div>
-            ))}
-          </div>
-        </article>
+      <CinematicReveal className="mb-10">
+        <span className="gold-badge inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] mb-4">
+          Your Safety Matters
+        </span>
+        <h2 className="font-display text-4xl font-bold text-[--text-primary] md:text-5xl">
+          How We Keep Your Money Safe
+        </h2>
+      </CinematicReveal>
 
-        <article className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
-          <h3 className="font-display text-3xl text-[--text-primary]">Transparency Notes</h3>
-          <p className="mt-2 text-sm text-[--text-secondary]">
-            Inspired by NBFC-P2P disclosure language patterns: informed participation is critical in private lending.
-          </p>
-          <ul className="mt-5 grid gap-3">
-            {transparencyPoints.map((item) => (
-              <li key={item} className="rounded-xl border border-[--brand-border] bg-[--surface-2] px-4 py-3 text-sm text-[--text-primary]">
-                {item}
-              </li>
-            ))}
-          </ul>
+      <div className="grid gap-5 lg:grid-cols-2">
+        <CinematicReveal>
+          <article className="glass rounded-[--radius-lg] p-6 md:p-7 h-full">
+            <h3 className="font-display text-2xl font-bold text-[--text-primary]">🛡️ Our Safety Process</h3>
+            <div className="mt-5 grid gap-4">
+              {safetySteps.map((item) => (
+                <div key={item.title} className="rounded-[--radius-md] bg-[--surface-card] p-4">
+                  <p className="font-bold text-[--text-primary]">{item.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-[--text-secondary]">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+        </CinematicReveal>
 
-          <div className="mt-6 rounded-2xl border border-[--brand-border] bg-[--surface-2] p-4">
-            <p className="text-xs uppercase tracking-[0.16em] text-[--text-secondary]">Important Context</p>
-            <p className="mt-2 text-sm leading-relaxed text-[--text-secondary]">
-              This website section explains process and decision structure. It is not an assurance of repayment or a promise
-              of fixed returns, and every lender should evaluate each opportunity independently.
+        <CinematicReveal delay={0.1}>
+          <article className="glass rounded-[--radius-lg] p-6 md:p-7 h-full">
+            <h3 className="font-display text-2xl font-bold text-[--text-primary]">💡 Things to Remember</h3>
+            <p className="mt-2 text-sm text-[--text-secondary]">
+              Private lending is a great way to earn money, but keep these things in mind.
             </p>
-          </div>
-        </article>
+            <ul className="mt-5 grid gap-3">
+              {reminders.map((item) => (
+                <li key={item} className="rounded-xl bg-[--surface-card] px-4 py-3 text-sm font-medium text-[--text-primary]">
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 rounded-[--radius-md] border border-[--glass-border-gold] bg-[--gold]/5 p-4">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-[--gold]">⚠️ Important Notice</p>
+              <p className="mt-2 text-sm leading-relaxed text-[--text-secondary]">
+                We do not guarantee fixed returns. Every lender should check the borrower&apos;s details carefully before giving money.
+              </p>
+            </div>
+          </article>
+        </CinematicReveal>
       </div>
     </section>
   );

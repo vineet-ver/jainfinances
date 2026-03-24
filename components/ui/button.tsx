@@ -2,22 +2,26 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-full text-sm font-semibold tracking-wide transition-all disabled:pointer-events-none disabled:opacity-50 w-full md:w-auto",
+  "relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap rounded-full text-sm font-semibold tracking-wide transition-all duration-300 disabled:pointer-events-none disabled:opacity-50 w-full md:w-auto",
   {
     variants: {
       variant: {
         primary:
-          "border border-[--brand-border] bg-[var(--brand-gradient)] px-6 py-3 text-black shadow-[0_6px_30px_rgba(212,175,55,0.35)] hover:brightness-110 active:scale-95",
+          "gold-badge px-7 py-3 text-[--olive] shadow-[0_6px_24px_rgba(255,170,0,0.3)] hover:shadow-[0_8px_32px_rgba(255,170,0,0.4)] hover:brightness-110 active:scale-95",
+        glass:
+          "glass px-7 py-3 text-[--text-primary] hover:border-[--gold] active:scale-95",
         ghost:
-          "border border-[--brand-border] px-6 py-3 text-[--text-primary] hover:bg-[--surface-2] active:scale-95",
+          "border border-[--glass-border] px-7 py-3 text-[--text-primary] hover:bg-[--surface-glass] active:scale-95",
+        blue:
+          "bg-[--blue] px-7 py-3 text-white shadow-[0_6px_24px_rgba(19,78,142,0.3)] hover:shadow-[0_8px_32px_rgba(19,78,142,0.4)] hover:brightness-110 active:scale-95",
       },
       size: {
         default: "h-11",
-        lg: "h-12 px-8",
+        lg: "h-13 px-8 text-base",
+        sm: "h-9 px-5 text-xs",
       },
     },
     defaultVariants: {
@@ -66,7 +70,7 @@ function Button({
       {ripples.map((ripple) => (
         <span
           key={ripple.id}
-          className="pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 animate-[ripple_520ms_ease-out_forwards]"
+          className="pointer-events-none absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40 animate-[ripple_520ms_ease-out_forwards]"
           style={{ left: ripple.x, top: ripple.y }}
         />
       ))}

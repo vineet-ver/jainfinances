@@ -34,84 +34,117 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 px-4 py-4 transition-transform duration-500 md:px-8", hidden ? "-translate-y-24" : "translate-y-0")}>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 px-4 py-4 transition-transform duration-500 md:px-8",
+        hidden ? "-translate-y-24" : "translate-y-0",
+      )}
+    >
       <nav
-        style={{ backgroundColor: scrolled ? "var(--surface-1)" : undefined }}
         className={cn(
-          "mx-auto flex max-w-7xl items-center justify-between rounded-full border border-[--brand-border] px-4 py-3 transition-all md:px-6",
+          "glass mx-auto flex max-w-7xl items-center justify-between rounded-full px-5 py-3  transition-all duration-500 md:px-7",
           scrolled
-            ? "py-2 shadow-[0_14px_38px_rgba(0,0,0,0.16)] backdrop-blur-xl"
-            : "bg-[var(--surface-2)] shadow-[0_10px_30px_rgba(0,0,0,0.12)] backdrop-blur-2xl backdrop-saturate-150 md:bg-transparent md:shadow-none md:backdrop-blur-0 md:backdrop-saturate-100",
+            ? "py-2.5 shadow-[0_12px_40px_rgba(0,0,0,0.12)]"
+            : "shadow-[0_8px_30px_rgba(0,0,0,0.08)]",
         )}
       >
-        <Link href="#home" className="logo-shimmer relative text-sm font-semibold tracking-[0.18em] text-[--text-primary]">
-          JAIN FINANCIAL
+        {/* Logo */}
+        <Link
+          href="#home"
+          className="logo-shimmer relative flex items-center gap-2 text-sm font-bold tracking-[0.2em] text-[--text-primary]"
+        >
+          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[--gold] text-xs font-black text-[--olive]">
+            JF
+          </span>
+          <span className="hidden sm:inline">JAIN FINANCIAL</span>
         </Link>
 
-        <div className="hidden items-center gap-7 md:flex">
+        {/* Desktop links */}
+        <div className="hidden items-center gap-6 lg:flex">
           {NAV_LINKS.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link text-xs uppercase tracking-[0.15em] text-[--text-secondary]">
+            <a
+              key={link.href}
+              href={link.href}
+              className="nav-link text-xs font-medium uppercase tracking-[0.14em] text-[--text-secondary] transition-colors hover:text-[--text-primary]"
+            >
               {link.label}
             </a>
           ))}
         </div>
 
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Desktop actions */}
+        <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
+          <a
+            href="#inquiry"
+            className="gold-badge inline-flex items-center rounded-full px-5 py-2 text-xs font-bold uppercase tracking-[0.12em] transition-transform hover:scale-105 active:scale-95"
+          >
+            Get Help Now
+          </a>
         </div>
 
+        {/* Mobile hamburger */}
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--brand-border] text-[--text-primary] md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--glass-border] text-[--text-primary] transition hover:border-[--gold] lg:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          data-cursor="active"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
 
+      {/* Mobile overlay */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-black/45 backdrop-blur-md transition-opacity md:hidden",
+          "fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity lg:hidden",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={() => setOpen(false)}
       />
 
+      {/* Mobile drawer */}
       <aside
-        style={{ backgroundColor: "var(--mobile-menu-bg)" }}
         className={cn(
-          "fixed inset-0 z-[60] h-dvh w-full overflow-y-auto p-6 backdrop-blur-2xl backdrop-saturate-150 transition-transform duration-500 md:hidden",
+          "fixed inset-0 z-[60] flex h-dvh w-full flex-col overflow-y-auto bg-[--mobile-menu-bg] p-6 transition-transform duration-500 lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="mb-8 flex items-center justify-between">
-          <p className="text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Menu</p>
+        <div className="mb-10 flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[--gold]">Menu</span>
           <div className="flex items-center gap-3">
             <ThemeToggle />
             <button
               onClick={() => setOpen(false)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--brand-border] text-[--text-primary]"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[--glass-border] text-[--text-primary]"
               aria-label="Close menu"
-              data-cursor="active"
             >
               <X className="h-5 w-5" />
             </button>
           </div>
         </div>
-        <div className="space-y-5">
-          {NAV_LINKS.map((link) => (
+
+        <div className="flex flex-1 flex-col gap-6">
+          {NAV_LINKS.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="block text-base font-medium text-[--text-primary]"
+              className="text-2xl font-display font-semibold text-[--text-primary] transition-colors hover:text-[--gold]"
+              style={{ transitionDelay: `${i * 50}ms` }}
             >
               {link.label}
             </a>
           ))}
         </div>
+
+        <a
+          href="#inquiry"
+          onClick={() => setOpen(false)}
+          className="gold-badge mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold uppercase tracking-[0.12em]"
+        >
+          Get Help Now
+        </a>
       </aside>
     </header>
   );

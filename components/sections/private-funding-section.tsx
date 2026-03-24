@@ -6,40 +6,32 @@ import { shimmerBlurDataUrl } from "@/lib/blur";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const lenderSteps = [
-  "Registration",
-  "Lender profile approval",
-  "View loan listings",
-  "Fund selected loans",
-  "Sign agreement with borrower",
-  "Disbursement",
-  "EMI profit realization",
-  "Further re-lending",
+const steps = [
+  "Register with us",
+  "We verify your profile",
+  "Browse loan options",
+  "Choose and fund a loan",
+  "Sign legal agreement",
+  "Money gets disbursed",
+  "Receive monthly EMI",
+  "Re-invest for more profit",
 ];
 
-const highlights = [
+const benefits = [
   {
-    title: "Lend For Better Returns",
-    description:
-      "Private funding structures inspired by P2P lending models, where lenders can target stronger yield potential than traditional savings avenues.",
+    title: "💰 Earn Good Returns",
+    desc: "Lend your money to verified borrowers and earn much better interest than bank FDs.",
   },
   {
-    title: "Transparent Digital Journey",
-    description:
-      "A clear lifecycle from onboarding to disbursement and repayment tracking, with each stage visible before commitment.",
+    title: "📋 100% Transparent",
+    desc: "See every step clearly — from loan approval to getting your monthly EMI back.",
   },
   {
-    title: "Risk-Aware Participation",
-    description:
-      "Lender decisions are made case-by-case with informed review, agreement signing, and ongoing repayment monitoring.",
+    title: "🔒 Safe & Legal",
+    desc: "We check every borrower carefully and sign proper legal agreements to protect you.",
   },
 ];
 
-const snapshots = [
-  { amount: "70,000", rate: "17.00%", duration: "18 months" },
-  { amount: "50,000", rate: "13.00%", duration: "12 months" },
-  { amount: "125,000", rate: "18.00%", duration: "18 months" },
-];
 
 export function PrivateFundingSection() {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,90 +46,59 @@ export function PrivateFundingSection() {
 
   return (
     <section id="private-funding" className="relative mx-auto max-w-7xl overflow-hidden px-6 py-24 md:px-10">
-      {!isMobile && <ParallaxLayer depth={40} className="pointer-events-none absolute -right-16 top-8 h-60 w-60 rounded-full bg-[--brand-solid]/12 blur-3xl" />}
+      {!isMobile && <ParallaxLayer depth={40} className="pointer-events-none absolute -right-16 top-8 h-60 w-60 rounded-full bg-[--gold]/8 blur-3xl" />}
       <SectionStickyLabel label="Private Funding" />
-      <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+
+      <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
+        {/* Left: Benefits */}
         <CinematicReveal>
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[--text-secondary]">Private Funding</p>
-          <h2 className="font-display text-4xl text-[--text-primary] md:text-5xl">P2P-Inspired Lending Framework</h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[--text-secondary] md:text-base">
-            Structured around Faircent-style private lending principles: lenders review opportunities, fund selectively,
-            execute agreements, and track repayment realization through a disciplined process.
+          <span className="gold-badge inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] mb-4">
+            Private Funding
+          </span>
+          <h2 className="font-display text-4xl font-bold text-[--text-primary] md:text-5xl">
+            Simple Private Funding Process
+          </h2>
+          <p className="mt-4 max-w-lg text-base leading-relaxed text-[--text-secondary]">
+            We connect borrowers with private lenders for fast funding. Easy process, safe agreements, good returns.
           </p>
 
           <div className="mt-8 grid gap-4">
-            {highlights.map((item) => (
-              <article key={item.title} className="rounded-2xl border border-[--brand-border] bg-[--surface-1] p-5">
-                <h3 className="font-display text-2xl text-[--text-primary]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[--text-secondary]">{item.description}</p>
+            {benefits.map((item) => (
+              <article key={item.title} className="premium-card glass rounded-[--radius-md] p-5">
+                <h3 className="font-display text-lg font-bold text-[--text-primary]">{item.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[--text-secondary]">{item.desc}</p>
               </article>
             ))}
           </div>
         </CinematicReveal>
 
-        <CinematicReveal delay={0.1} className="rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
-          <p className="text-xs uppercase tracking-[0.18em] text-[--text-secondary]">How It Works For Lenders</p>
+        {/* Right: Steps + Images */}
+        <CinematicReveal delay={0.1} className="glass rounded-[--radius-xl] p-6 md:p-7">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-[--gold]">How It Works</p>
+
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
-              <Image
-                src="/private-fund1.png"
-                alt="Private funding insights"
-                fill
-                sizes="(max-width: 768px) 100vw, 300px"
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={shimmerBlurDataUrl(300, 160)}
-                loading="lazy"
-              />
+            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
+              <Image src="/private-fund1.jpg" alt="Private funding" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 160)} loading="lazy" />
             </div>
-            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-2xl border border-[--brand-border]">
-              <Image
-                src="/loan1.png"
-                alt="Loan structuring support"
-                fill
-                sizes="(max-width: 768px) 100vw, 300px"
-                className="object-cover"
-                placeholder="blur"
-                blurDataURL={shimmerBlurDataUrl(300, 160)}
-                loading="lazy"
-              />
+            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
+              <Image src="/loan1.jpg" alt="Loan process" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 160)} loading="lazy" />
             </div>
           </div>
-          <ol className="mt-5 grid gap-3">
-            {lenderSteps.map((step, index) => (
-              <li key={step} className="flex items-start gap-3 rounded-xl border border-[--brand-border] bg-[--surface-2] p-3">
-                <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[--brand-border] text-xs font-semibold text-[--brand-solid]">
-                  {index + 1}
+
+          <ol className="mt-5 grid gap-2.5">
+            {steps.map((step, i) => (
+              <li key={step} className="flex items-center gap-3 rounded-xl bg-[--surface-card] p-3 transition-colors hover:bg-[--gold]/5">
+                <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[--gold]/15 text-xs font-bold text-[--gold]">
+                  {i + 1}
                 </span>
-                <span className="text-sm text-[--text-primary]">{step}</span>
+                <span className="text-sm font-medium text-[--text-primary]">{step}</span>
               </li>
             ))}
           </ol>
         </CinematicReveal>
       </div>
 
-      <CinematicReveal delay={0.15} className="mt-10 rounded-3xl border border-[--brand-border] bg-[--surface-1] p-6 md:p-7">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h3 className="font-display text-3xl text-[--text-primary] md:text-4xl">Funding Snapshot Patterns</h3>
-          <p className="text-xs uppercase tracking-[0.14em] text-[--text-secondary]">Amount | Rate | Duration</p>
-        </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {snapshots.map((item, index) => (
-            <article key={`${item.amount}-${index}`} className="rounded-2xl border border-[--brand-border] bg-[--surface-2] p-5">
-              <p className="text-xs uppercase tracking-[0.14em] text-[--text-secondary]">Borrowed</p>
-              <p className="mt-1 font-display text-3xl text-[--text-primary]">₹{item.amount}</p>
-              <p className="mt-4 text-sm text-[--text-secondary]">Interest Rate: {item.rate}</p>
-              <p className="mt-1 text-sm text-[--text-secondary]">Duration: {item.duration}</p>
-            </article>
-          ))}
-        </div>
-
-        <p className="mt-6 text-xs leading-relaxed text-[--text-secondary]">
-          Important: As with platform-based private lending models, repayment outcomes are typically best-effort and
-          lender decisions remain discretionary. This section is for process transparency and informed decision support.
-        </p>
-      </CinematicReveal>
     </section>
   );
 }

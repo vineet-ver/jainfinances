@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import { AppProviders } from "@/components/providers/app-providers";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+const display = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const body = Manrope({
+const body = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -17,23 +17,23 @@ const body = Manrope({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jfc-service.vercel.app"),
-  title: "Jain Financial Consultancy Service",
+  title: "Jain Financial Consultancy — Easy Loans, Private Funding & Finance Help",
   description:
-    "Premium financial consultancy for loan services, real estate strategy, and private funding for discerning clients.",
+    "Get fast business loans, personal loans, and private funding with Jain Financial Consultancy. Trusted by 1000+ clients across India. Simple process, quick approvals.",
   openGraph: {
-    title: "Jain Financial Consultancy Service",
+    title: "Jain Financial Consultancy — Your Trusted Finance Partner",
     description:
-      "Pioneering financial excellence with concierge-grade advisory in loans, real estate, and private funding.",
+      "Easy loans, private funding, and expert financial help for families and businesses across India. 500 Crore+ disbursed.",
     url: "https://jfc-service.vercel.app",
-    siteName: "Jain Financial Consultancy Service",
+    siteName: "Jain Financial Consultancy",
     locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jain Financial Consultancy Service",
+    title: "Jain Financial Consultancy — Easy Loans & Private Funding",
     description:
-      "Private, high-trust financial advisory for high-value decisions in India.",
+      "Trusted by 1000+ Indian clients. Fast approvals, simple process, expert guidance.",
   },
 };
 
