@@ -83,7 +83,7 @@ export function ServicesSection() {
               <Building2 className="h-5 w-5" />
             </span>
             <div>
-              <h3 className="font-display text-xl font-bold text-[--text-primary]">Real Estate (Only 10%)</h3>
+              <h3 className="font-display text-xl font-bold text-[--text-primary]">Real Estate</h3>
               <p className="text-sm text-[--text-secondary]">
                 We help with property buy/sell only in selected cases. Our main work is giving you the best financial solutions.
               </p>
