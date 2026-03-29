@@ -77,11 +77,11 @@ export function PrivateFundingSection() {
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-[--gold]">How It Works</p>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
-              <Image src="/private-fund1.jpg" alt="Private funding" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 160)} loading="lazy" />
+            <div className="image-sheen premium-card relative aspect-square overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
+              <Image src="/private-fund1.jpg" alt="Private funding" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 300)} loading="lazy" />
             </div>
-            <div className="image-sheen premium-card relative h-28 overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
-              <Image src="/loan1.jpg" alt="Loan process" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 160)} loading="lazy" />
+            <div className="image-sheen premium-card relative aspect-square overflow-hidden rounded-[--radius-md] border border-[--glass-border]">
+              <Image src="/loan1.jpg" alt="Loan process" fill sizes="(max-width: 768px) 100vw, 300px" className="object-cover" placeholder="blur" blurDataURL={shimmerBlurDataUrl(300, 300)} loading="lazy" />
             </div>
           </div>
 
