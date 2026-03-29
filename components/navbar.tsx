@@ -54,9 +54,9 @@ export function Navbar() {
           className="logo-shimmer relative flex items-center gap-2 text-sm font-bold tracking-[0.2em] text-[--text-primary]"
         >
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[--gold] text-xs font-black text-[--olive]">
-            JF
+            JFCS
           </span>
-          <span className="hidden sm:inline">JAIN FINANCIAL</span>
+          <span className="hidden sm:inline">JAIN FINANCIAL CONSULTANCY SERVICE</span>
         </Link>
 
         {/* Desktop links */}
