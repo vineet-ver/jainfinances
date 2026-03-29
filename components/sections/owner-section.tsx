@@ -73,7 +73,7 @@ export function OwnerSection() {
                 priority
               />
             </div>
-            <span className="inline-block rounded-full bg-[--blue] px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-white">
+            <span className="gold-badge inline-block rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.12em]">
               CEO
             </span>
             <p className="mt-3 font-display text-2xl font-bold text-[--text-primary]">Payal Gupta</p>
