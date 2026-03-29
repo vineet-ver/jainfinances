@@ -69,7 +69,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 md:gap-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-16">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[--gold]">Quick Links</p>
                 <div className="mt-4 space-y-3">
@@ -88,8 +88,8 @@ export default function Home() {
                   <a href={`tel:${CONTACT.phone2}`} className="flex items-center gap-2 text-sm text-[--text-secondary] transition hover:text-[--text-primary]">
                     <Phone size={14} className="text-[--gold]" /> {CONTACT.phone2}
                   </a>
-                  <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-2 text-sm text-[--text-secondary] transition hover:text-[--text-primary]">
-                    <Mail size={14} className="text-[--gold]" /> {CONTACT.email}
+                  <a href={`mailto:${CONTACT.email}`} className="flex items-start gap-2 text-sm text-[--text-secondary] transition hover:text-[--text-primary] break-all">
+                    <Mail size={14} className="mt-0.5 shrink-0 text-[--gold]" /> <span>{CONTACT.email}</span>
                   </a>
                 </div>
               </div>
