@@ -60,9 +60,9 @@ export default function Home() {
             <div className="max-w-sm">
               <div className="flex items-center gap-2">
                 <span className="gold-badge inline-flex h-10 w-10 items-center justify-center rounded-xl text-sm font-black">
-                  JF
+                  JFCS
                 </span>
-                <span className="font-display text-xl font-bold text-[--text-primary]">Jain Financial</span>
+                <span className="font-display text-xl font-bold text-[--text-primary]">Jain Financial Consultancy Service</span>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-[--text-secondary]">
                 Your trusted partner for fast loans, private funding, and expert financial advice. Serving families and businesses across India.
@@ -103,7 +103,7 @@ export default function Home() {
               {CONTACT.address}
             </div>
             <p className="text-xs text-[--text-muted]">
-              © {new Date().getFullYear()} Jain Financial Consultancy. All rights reserved.
+              © {new Date().getFullYear()} Jain Financial Consultancy Service. All rights reserved.
             </p>
           </div>
         </div>
