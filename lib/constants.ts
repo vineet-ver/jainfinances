@@ -3,7 +3,7 @@ export const CONTACT = {
   phone2: "011 42351420",
   whatsapp: "https://wa.me/919977630730",
   email: "jainfinancialconsultancy@gmail.com",
-  address: "B-309, Statement House, Barakhamba Road, New Delhi - 110001.",
+  address: "B-309, Statement House, Barakhamba Road, connaught place, New Delhi - 110001.",
 } as const;
 
 export const MANAGEMENT = {
