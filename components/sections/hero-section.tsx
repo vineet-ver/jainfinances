@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const stats = [
-  { value: "500 Cr+", label: "Loans Given" },
-  { value: "1000+", label: "Happy Clients" },
+  { value: "1000 Cr+", label: "Loans Given" },
+  { value: "2000+", label: "Happy Clients" },
   { value: "12+", label: "Years Experience" },
 ];
 
@@ -35,7 +35,7 @@ export function HeroSection() {
         >
           <span className="glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-[--text-secondary]">
             <span className="h-2 w-2 rounded-full bg-[--gold]" />
-            Jain Financial Consultancy
+            Jain Financial Consultancy Service
           </span>
         </motion.div>
 
