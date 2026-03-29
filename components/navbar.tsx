@@ -106,7 +106,7 @@ export function Navbar() {
       {/* Mobile drawer */}
       <aside
         className={cn(
-          "fixed inset-0 z-[60] flex h-dvh w-full flex-col overflow-y-auto bg-[--mobile-menu-bg] p-6 transition-transform duration-500 lg:hidden",
+          "fixed inset-0 z-[60] flex h-dvh w-full flex-col overflow-y-auto bg-[var(--bg)]/95 backdrop-blur-xl p-6 transition-transform duration-500 lg:hidden",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
