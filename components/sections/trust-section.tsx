@@ -25,15 +25,15 @@ export function TrustSection() {
       {/* Counter cards */}
       <CinematicReveal className="grid gap-5 md:grid-cols-3">
         <article className="glass rounded-[--radius-lg] p-6 text-center">
-          <ScrollCounter value={20} suffix="+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
+          <ScrollCounter value={12} suffix="+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
           <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-[--text-secondary]">Years Experience</p>
         </article>
         <article className="glass rounded-[--radius-lg] p-6 text-center">
-          <ScrollCounter value={500} suffix=" Cr+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
+          <ScrollCounter value={1000} suffix=" Cr+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
           <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-[--text-secondary]">Loans Given</p>
         </article>
         <article className="glass rounded-[--radius-lg] p-6 text-center">
-          <ScrollCounter value={1000} suffix="+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
+          <ScrollCounter value={2000} suffix="+" className="font-display text-5xl font-bold text-[--gold] md:text-6xl" />
           <p className="mt-2 text-sm font-bold uppercase tracking-[0.12em] text-[--text-secondary]">Happy Clients</p>
         </article>
       </CinematicReveal>
