@@ -31,7 +31,7 @@ export function OwnerSection() {
           >
             <div className="relative mx-auto h-36 w-36 overflow-hidden rounded-2xl border-2 border-[--gold]/30 mb-5">
               <Image
-                src="/founded.jpeg"
+                src="/founded.jpg"
                 alt="Surendra Jain"
                 fill
                 sizes="144px"
